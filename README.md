@@ -15,6 +15,14 @@ This section outlines all the resources I used.
 ### Data
 This section lists the data sources I used to build my dataset.
 
+1. [daigt data - llama 70b and falcon 70b](https://www.kaggle.com/datasets/nbroad/daigt-data-llama-70b-and-falcon180b?select=falcon_180b_v1.csv)
+2. [1000 Essays from Antrophic](https://www.kaggle.com/datasets/darraghdog/hello-claude-1000-essays-from-anthropic)
+3. [LLM-generated essay using PaLM from Google Gen-AI](https://www.kaggle.com/datasets/kingki19/llm-generated-essay-using-palm-from-google-gen-ai)
+4. [persuade corpus 2.0](https://www.kaggle.com/datasets/nbroad/persaude-corpus-2/?select=persuade_2.0_human_scores_demo_id_github.csv)
+5. [DAIGT | External Dataset](https://www.kaggle.com/datasets/alejopaullier/daigt-external-dataset)
+6. [ArguGPT](https://www.kaggle.com/datasets/alejopaullier/argugpt?select=argugpt.csv)
+7. [essays-with-instructions](https://huggingface.co/datasets/ChristophSchuhmann/essays-with-instructions)
+
 ### Papers
 This section outlines all papers I used to guide my approach.
 
