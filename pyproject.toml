@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "authentic-ai"
+version = "0.1.0"
+description = "A machine learning solution to determine whether an essay is A.I generated or student-written."
+authors = ["Jinal.Shah <28205508+JinalShah2002@users.noreply.github.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
