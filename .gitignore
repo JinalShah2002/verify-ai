@@ -1,6 +1,7 @@
 # Ignoring the data
 data/
 .python-version
+credentials.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
