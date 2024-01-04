@@ -179,8 +179,8 @@ if __name__ == '__main__':
     create_table = """
     CREATE TABLE essays (
         row_id INT PRIMARY KEY AUTO_INCREMENT,
-        prompt VARCHAR(250),
-        essay VARCHAR(5000) NOT NULL,
+        prompt VARCHAR(1500),
+        essay TEXT(130000) NOT NULL,
         word_count INT NOT NULL,
         LLM_written INT NOT NULL
         );
