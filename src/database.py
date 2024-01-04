@@ -180,7 +180,7 @@ if __name__ == '__main__':
     CREATE TABLE essays (
         row_id INT PRIMARY KEY AUTO_INCREMENT,
         prompt VARCHAR(250),
-        essay VARCHAR(10000) NOT NULL,
+        essay VARCHAR(5000) NOT NULL,
         word_count INT NOT NULL,
         LLM_written INT NOT NULL
         );
