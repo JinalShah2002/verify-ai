@@ -389,6 +389,28 @@ extra = ["lxml (>=4.6)", "pygraphviz (>=1.11)", "pydot (>=1.4.2)", "sympy (>=1.1
 test = ["pytest (>=7.2)", "pytest-cov (>=4.0)"]
 
 [[package]]
+name = "nltk"
+version = "3.8.1"
+description = "Natural Language Toolkit"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+click = "*"
+joblib = "*"
+regex = ">=2021.8.3"
+tqdm = "*"
+
+[package.extras]
+all = ["scikit-learn", "python-crfsuite", "requests", "numpy", "pyparsing", "twython", "scipy", "matplotlib"]
+corenlp = ["requests"]
+machine_learning = ["numpy", "python-crfsuite", "scikit-learn", "scipy"]
+plot = ["matplotlib"]
+tgrep = ["pyparsing"]
+twitter = ["twython"]
+
+[[package]]
 name = "numpy"
 version = "1.26.3"
 description = "Fundamental package for array computing in Python"
@@ -1230,7 +1252,7 @@ wasabi = ">=0.9.1,<1.2.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "3fab2363785ce9ef2d434308045593b8de2b62bdcac51e4ad7d7cd207abbef02"
+content-hash = "49c4ea6673779ea8ecd4fb47c95e9b0ecbf5fdce141ac79a4372176bc5b05062"
 
 [metadata.files]
 annotated-types = []
@@ -1263,6 +1285,7 @@ mpmath = []
 murmurhash = []
 mysql-connector-python = []
 networkx = []
+nltk = []
 numpy = []
 nvidia-cublas-cu12 = []
 nvidia-cuda-cupti-cu12 = []
