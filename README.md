@@ -34,5 +34,11 @@ This section outlines all papers I used to guide my approach.
 5. [On the Possibilities of AI-Generated Text Detection](https://arxiv.org/abs/2304.04736)
 6. [Release Strategies and the Social Impacts of Language Models](https://d4mucfpksywv.cloudfront.net/papers/GPT_2_Report.pdf)
 
+### Other Resources
+This section outlines other resources I utilized such as off-the-shelf models.
+
+1. [RoBERTa Base OpenAI Detector](https://huggingface.co/roberta-base-openai-detector)
+2. [Emotion English DistilRoBERTa-base](https://huggingface.co/j-hartmann/emotion-english-distilroberta-base)
+
 ## Author
 If you have any questions about the project, feel free to reach out to me on [LinkedIn](https://www.linkedin.com/in/jinalshah2002/)!
