@@ -1,5 +1,6 @@
 # Ignoring the data
 preprocessed_data.csv
+prepared_training_set.csv
 .python-version
 credentials.py
 
