@@ -3,6 +3,7 @@ preprocessed_data.csv
 prepared_training_set.csv
 .python-version
 credentials.py
+models/Hugging-Face
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

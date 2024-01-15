@@ -17,6 +17,8 @@ from tqdm import tqdm
 import pandas as pd
 from torchtext.data import get_tokenizer
 import language_tool_python
+import torch
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
 # Adding the credentials
 sys.path.append('../')
@@ -34,7 +36,12 @@ class Preprocessing():
         self.tokenizer = RegexpTokenizer(r'[a-zA-Z]+') # tokenizer for words only
         self.overall_tokenizer = get_tokenizer('spacy',language='en_core_web_sm')
         self.grammar_checker = language_tool_python.LanguageTool('en-US',config={'cacheSize': 5000,'maxCheckThreads':20})
-        
+        self.detector_tokenizer = AutoTokenizer.from_pretrained("roberta-base-openai-detector")
+        self.detector = AutoModelForSequenceClassification.from_pretrained("roberta-base-openai-detector")
+        self.emotion_tokenizer = AutoTokenizer.from_pretrained("j-hartmann/emotion-english-distilroberta-base")
+        self.emotion_detector = AutoModelForSequenceClassification.from_pretrained("j-hartmann/emotion-english-distilroberta-base")
+        self.emotions = ['anger','disgust','fear','joy','neutral','sadness','surprise']
+
         print('Tokenizing the essays into only words...')
         self.data['tokenized_essay_words'] = self.data['essay'].progress_apply(self.tokenize_essay_words)
         print()
@@ -87,6 +94,44 @@ class Preprocessing():
         errors = self.grammar_checker.check(essay)
         return len(errors)
     
+    # A function to get the detection from OpenAI's GPT-2 Detector
+    def get_detect_pred(self,text:str) -> int:
+        # Tokenizing the input essay
+        inputs = self.detector_tokenizer(text,return_tensors='pt',truncation=True)
+
+        # Getting the logits
+        with torch.no_grad():
+            logits = self.detector(**inputs).logits
+
+        # Doing 1 - max logit because the model has "Real" = class 1 and "Fake" = class 0
+        # My labels are the opposite, 1 = LLM Written and 0 = student written.
+        # If a logit = 0 = Fake, 1-0 = 1 = LLM Written
+        # If a logit = 1 = Real, 1-1 = 0 = student written
+        predicted_class = 1 - logits.argmax().item()
+        return predicted_class
+    
+    # A function to get the prediction from the Emotion Detector
+    def emotion_detector_pred(self,essay:str) -> tuple[int,int,int,int]:
+        # Tokenizing the input essay
+        inputs = self.emotion_tokenizer(essay,return_tensors='pt',truncation=True)
+
+        # Getting the logits
+        with torch.no_grad():
+            logits = self.emotion_detector(**inputs).logits
+
+        # Getting the predicted emotion
+        predicted_emotion = self.emotions[logits.argmax().item()]
+        if predicted_emotion == 'anger':
+            return 1,0,0,0
+        elif predicted_emotion == 'surprise':
+            return 0,1,0,0
+        elif predicted_emotion == 'sadness':
+            return 0,0,1,0
+        elif predicted_emotion == 'fear':
+            return 0,0,0,1
+        else:
+            return 0,0,0,0
+    
     # A function to knit all preprocessing together
     def preprocessing(self) -> pd.DataFrame:
         # Getting the stop word count and the stop word ratio
@@ -113,6 +158,20 @@ class Preprocessing():
         # Getting the number of grammatical errors
         print('Getting grammar error counts...')
         self.data['grammar_errors'] = self.data['essay'].progress_apply(self.get_grammar_error_count)
+        print()
+
+        # Adding the detector model prediction
+        print('Getting Detector Prediction...')
+        self.data['detector_pred'] = self.data['essay'].progress_apply(self.get_detect_pred)
+        print()
+
+        # Getting the emotion model prediction
+        print('Getting Emotion Prediction...')
+        emotion_rows = self.data['essay'].progress_apply(self.emotion_detector_pred)
+        self.data['anger_pred'] = [row[0] for row in emotion_rows]
+        self.data['surprise_pred'] = [row[1] for row in emotion_rows]
+        self.data['sadness_pred'] = [row[2] for row in emotion_rows]
+        self.data['fear_pred'] = [row[3] for row in emotion_rows]
         print()
 
         # Dropping the tokenized parts
