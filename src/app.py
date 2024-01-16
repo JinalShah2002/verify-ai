@@ -71,12 +71,12 @@ if submit_button:
     preprocessed_input.drop(['essay'],axis=1,inplace=True)
 
     # Scaling it
-    with open('../scaler.pkl','rb') as scaler_file:
+    with open('../scalars/scalar_grammar.pkl','rb') as scaler_file:
         scaler = pickle.load(scaler_file)
     preprocessed_input[numerical] = scaler.transform(preprocessed_input[numerical])
     
     # Sending into model
-    with open('../models/d-tree-max-depth-3-max-features-3.pkl','rb') as model_file:
+    with open('../models/random_forest_base.pkl','rb') as model_file:
         model = pickle.load(model_file)
 
     # Making predictions
