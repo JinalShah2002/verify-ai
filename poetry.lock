@@ -79,6 +79,26 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
+name = "catboost"
+version = "1.2.2"
+description = "CatBoost Python Package"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+graphviz = "*"
+matplotlib = "*"
+numpy = ">=1.16.0"
+pandas = ">=0.24"
+plotly = "*"
+scipy = "*"
+six = "*"
+
+[package.extras]
+widget = ["traitlets", "ipython", "ipywidgets (>=7.0,<9.0)"]
+
+[[package]]
 name = "certifi"
 version = "2023.11.17"
 description = "Python package for providing Mozilla's CA Bundle."
@@ -282,6 +302,19 @@ gitdb = ">=4.0.1,<5"
 
 [package.extras]
 test = ["black", "coverage", "ddt (>=1.1.1,!=1.4.3)", "mypy", "pre-commit", "pytest (>=7.3.1)", "pytest-cov", "pytest-instafail", "pytest-mock", "pytest-sugar", "sumtypes", "mock"]
+
+[[package]]
+name = "graphviz"
+version = "0.20.1"
+description = "Simple Python interface for Graphviz"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.extras]
+dev = ["tox (>=3)", "flake8", "pep8-naming", "wheel", "twine"]
+docs = ["sphinx (>=5)", "sphinx-autodoc-typehints", "sphinx-rtd-theme"]
+test = ["pytest (>=7)", "pytest-mock (>=3)", "mock (>=4)", "pytest-cov", "coverage"]
 
 [[package]]
 name = "greenlet"
@@ -742,6 +775,18 @@ mic = ["olefile"]
 tests = ["check-manifest", "coverage", "defusedxml", "markdown2", "olefile", "packaging", "pyroma", "pytest", "pytest-cov", "pytest-timeout"]
 typing = ["typing-extensions"]
 xmp = ["defusedxml"]
+
+[[package]]
+name = "plotly"
+version = "5.18.0"
+description = "An open-source, interactive data visualization library for Python"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+packaging = "*"
+tenacity = ">=6.2.0"
 
 [[package]]
 name = "preshed"
@@ -1602,7 +1647,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-ena
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "74ee164406a515096eb1508171bf343d30acb79a863905f5396141713c3c8eef"
+content-hash = "ecba0a4a06f0792f8beacde7f5abeee3fb82dce780c37fcfa17ffc7ada29cabb"
 
 [metadata.files]
 altair = []
@@ -1612,6 +1657,7 @@ blinker = []
 blis = []
 cachetools = []
 catalogue = []
+catboost = []
 certifi = []
 charset-normalizer = []
 click = []
@@ -1627,6 +1673,7 @@ fonttools = []
 fsspec = []
 gitdb = []
 gitpython = []
+graphviz = []
 greenlet = []
 huggingface-hub = []
 idna = []
@@ -1663,6 +1710,7 @@ nvidia-nvtx-cu12 = []
 packaging = []
 pandas = []
 pillow = []
+plotly = []
 preshed = []
 protobuf = []
 pyarrow = []

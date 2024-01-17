@@ -1,0 +1,5 @@
+﻿Model,Training Score,Testing Score,Average CV Score
+"Logistic Regression (l2 penalty, max_iter=900, C =0.5)",0.998,0.79,0.867
+Decision Tree(min_samples_leaf=20),0.985,0.668,0.873
+Random Forest (base from Sklearn),1,0.743,0.949
+"CatBoost (iterations=100,learning_rate=0.03)",0.988,0.738,N/A

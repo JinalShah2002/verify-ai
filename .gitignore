@@ -4,6 +4,8 @@ prepared_training_set.csv
 .python-version
 credentials.py
 Hugging-Face
+notebooks/catboost_info
+vectorizer.pk
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
