@@ -5,7 +5,8 @@ prepared_training_set.csv
 credentials.py
 Hugging-Face
 notebooks/catboost_info
-vectorizer.pk
+vectorizers, vocabularies, and scalars/
+data/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
