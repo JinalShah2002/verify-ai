@@ -24,4 +24,5 @@ Bidirectional LSTM,0.9999,0.74
 Bidirectional LSTM with Constraints like Dropout,0.961,0.678
 "Bidirectional LSTM (embed dim 250, hidden dim 128, dropout 0.3 )",0.9995,0.771
 "2 Layer Bidirectional LSTM (embed dim 250, hidden dim 128, dropout 0.3)",0.9999,0.791
-"Transformer (d_model = 512, nheads=8, 2 layers)",,
+"Transformer (d_model = 512, nheads=8, 2 layers, trained for 10 epochs)",0.992,0.782
+"Transformer (d_model = 512, nheads=8, 2 layers, trained for 30 epochs)",0.999,0.81
