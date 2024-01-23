@@ -6,7 +6,7 @@ authors = ["Jinal.Shah <28205508+JinalShah2002@users.noreply.github.com>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = ">=3.10, <3.11"
+python = ">=3.9,<3.9.7 || >3.9.7,<3.11"
 mysql-connector-python = "^8.2.0"
 pandas = "^2.1.4"
 numpy = "^1.26.3"
