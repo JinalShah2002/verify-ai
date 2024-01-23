@@ -37,31 +37,42 @@ st.write('Paste your essay into the below text box and click submit. Within 3 mi
 if 'essay' not in st.session_state.keys():
     st.session_state['essay'] = ''
 
-# Creating states for tokenizer, stemmer, and vocab
-if 'tokenizer' not in st.session_state.keys():
-    st.session_state['tokenizer'] = get_tokenizer('spacy','en_core_web_sm')
+# Creating function to return stemmer, tokenizer, and vocab
+@st.cache_resource
+def get_all():
+    tokenizer = get_tokenizer('spacy','en_core_web_sm')
+    stemmer = SnowballStemmer(language='english')
+    vocab = torch.load('vocab.pt')
+    return tokenizer, stemmer, vocab
 
-if 'stemmer' not in st.session_state.keys():
-    st.session_state['stemmer'] = SnowballStemmer(language='english')
+# Adding a caching function for the model
+@st.cache_resource
+def load_model():
+    return torch.load('models/Transformer/transformers_30_epochs.pt',map_location=torch.device('cpu'))
 
-if 'vocab' not in st.session_state.keys():
-    st.session_state['vocab'] = torch.load('vocab.pt')
+# Adding a caching function for the embedding
+@st.cache_resource
+def load_embedding():
+    return torch.load('models/Transformer/embedding_30_epochs.pt',map_location=torch.device('cpu'))
+
+# Adding a caching function for the positional encoding
+@st.cache_resource
+def load_encoder():
+    return torch.load('models/Transformer/positional_encoding_30_epochs.pt',map_location=torch.device('cpu'))
+
+# Getting the preprocessing stuff
+tokenizer, stemmer, vocab = get_all()
 
 # Setting up the model
-if 'model' not in st.session_state.keys():
-    st.session_state['model'] = Model(d_model=512,nheads=8,dim_feedforward=2048,dropout=0.1,num_layers=2)
-    st.session_state['model'].load_state_dict(torch.load('models/Transformer/transformers_30_epochs.pt',map_location=torch.device('cpu')))
-    st.session_state['model'].eval() # putting model on evaluation mode
-
-if 'positional_encoder' not in st.session_state.keys():
-    st.session_state['positional_encoder'] = PositionalEncoding(512,dropout=0.1,maxlen=500)
-    st.session_state['positional_encoder'].load_state_dict(torch.load('models/Transformer/positional_encoding_30_epochs.pt',map_location=torch.device('cpu')))
-    st.session_state['positional_encoder'].eval() # putting model on evaluation mode
-
-if 'embedding' not in st.session_state.keys():
-    st.session_state['embedding'] = TokenEmbedding(st.session_state['vocab'].__len__(),512)
-    st.session_state['embedding'].load_state_dict(torch.load('models/Transformer/embedding_30_epochs.pt',map_location=torch.device('cpu')))
-    st.session_state['embedding'].eval() # putting model on evaluation mode
+model = Model(d_model=512,nheads=8,dim_feedforward=2048,dropout=0.1,num_layers=2)
+model.load_state_dict(load_model())
+model.eval()
+positional_encoder = PositionalEncoding(512,dropout=0.1,maxlen=500)
+positional_encoder.load_state_dict(load_encoder())
+positional_encoder.eval()
+embedding = TokenEmbedding(vocab.__len__(),512)
+embedding.load_state_dict(load_embedding())
+embedding.eval()
 
 # Function for preprocessing essays
 def preprocess_essays(essay:str) -> list:
@@ -69,16 +80,16 @@ def preprocess_essays(essay:str) -> list:
     # Preprocessing the essay a bit
     preprocess_essay = essay.replace('\n',"")
     preprocess_essay = essay.replace('\t',"")
-    tokenized = st.session_state['tokenizer'](preprocess_essay.replace('\n',""))
+    tokenized = tokenizer(preprocess_essay.replace('\n',""))
 
     # Getting the lemmas
-    prepared_essay = [st.session_state['stemmer'].stem(token) for token in tokenized]
+    prepared_essay = [stemmer.stem(token) for token in tokenized]
 
     return prepared_essay
 
 # Function to create padding mask
 def create_padding_mask(X):
-    return (X == st.session_state['vocab']['<pad>'])
+    return (X == vocab['<pad>'])
 
 # Creating a form to drop the text into 
 form = st.form(key='my_form')
@@ -91,16 +102,16 @@ submit_button = form.form_submit_button('Submit')
 if submit_button:
     # Sending text through the preprocessing pipeline
     tokenized_essays = preprocess_essays(st.session_state['text'])
-    preprocessed_input = [st.session_state['vocab'](tokenized_essays)]
+    preprocessed_input = [vocab(tokenized_essays)]
 
     # Padding the essay
-    padded_essays = pad_sequences(preprocessed_input,maxlen=500,padding='post',truncating='post',value=st.session_state['vocab']['<pad>'])
+    padded_essays = pad_sequences(preprocessed_input,maxlen=500,padding='post',truncating='post',value=vocab['<pad>'])
     padded_essays_tensor = torch.from_numpy(padded_essays)
 
     # Putting example through model
-    embed_input = st.session_state['embedding'](padded_essays_tensor)
-    model_input = st.session_state['positional_encoder'](embed_input)
-    predictions = st.session_state['model'](model_input,src_key_padding_mask=create_padding_mask(padded_essays_tensor))
+    embed_input = embedding(padded_essays_tensor)
+    model_input = positional_encoder(embed_input)
+    predictions = model(model_input,src_key_padding_mask=create_padding_mask(padded_essays_tensor))
 
     # Making predictions
     st.write(f'There is a {round(predictions.item() * 100,2)}% chance this essay was written by a LLM')
