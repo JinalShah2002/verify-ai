@@ -2,7 +2,6 @@
 .python-version
 credentials.py
 notebooks/catboost_info
-vectorizers, vocabularies, and scalars/
 models/Fine-Tuned Roberta
 
 # Byte-compiled / optimized / DLL files
