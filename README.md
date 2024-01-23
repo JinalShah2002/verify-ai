@@ -13,7 +13,7 @@ The Kaggle challenge already provides me with a dataset. However, the dataset is
 ## Application
 The application is live! You can go directly to ![https://verifyai.streamlit.app/](https://verifyai.streamlit.app/) to play with the project! All you need to do is paste your essay into the text box and in a couple minutes, you will see a probability of how likely it is for the essay to be written by a LLM. The following images illustrate how to use the app:
 
-![plot](images/blank.png)
+![alt-text-1](images/blank.png "title-1") ![alt-text-2](images/text.png "title-2")
 
 
 ## References
