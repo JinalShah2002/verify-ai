@@ -18,13 +18,15 @@ import streamlit as st
 import pandas as pd
 import torch
 import torch.nn as nn
+import torchtext
+from torchtext.data import get_tokenizer
 from nltk.stem import SnowballStemmer
 from tensorflow import keras
 from keras.utils import pad_sequences
-from transformer import Model, PositionalEncoding, TokenEmbedding
 import sys
+sys.path.append('src/')
 
-sys.path.append('../')
+from transformer import Model, PositionalEncoding, TokenEmbedding
 
 st.markdown("<h1 style='text-align: center; color: teal;'>Authentic.AI</h1>", unsafe_allow_html=True)
 st.markdown("<h2 style='text-align: center; color: teal;'>Using machine learning to detect A.I generated essays 🤖</h2>", unsafe_allow_html=True)
@@ -43,22 +45,22 @@ if 'stemmer' not in st.session_state.keys():
     st.session_state['stemmer'] = SnowballStemmer(language='english')
 
 if 'vocab' not in st.session_state.keys():
-    st.session_state['vocab'] = torch.load('../vocab.pt')
+    st.session_state['vocab'] = torch.load('vocab.pt')
 
 # Setting up the model
 if 'model' not in st.session_state.keys():
     st.session_state['model'] = Model(d_model=512,nheads=8,dim_feedforward=2048,dropout=0.1,num_layers=2)
-    st.session_state['model'].load_state_dict(torch.load('../models/Transformer/transformers_30_epochs.pt',map_location=torch.device('cpu')))
+    st.session_state['model'].load_state_dict(torch.load('models/Transformer/transformers_30_epochs.pt',map_location=torch.device('cpu')))
     st.session_state['model'].eval() # putting model on evaluation mode
 
 if 'positional_encoder' not in st.session_state.keys():
     st.session_state['positional_encoder'] = PositionalEncoding(512,dropout=0.1,maxlen=500)
-    st.session_state['positional_encoder'].load_state_dict(torch.load('../models/Transformer/positional_encoding_30_epochs.pt',map_location=torch.device('cpu')))
+    st.session_state['positional_encoder'].load_state_dict(torch.load('models/Transformer/positional_encoding_30_epochs.pt',map_location=torch.device('cpu')))
     st.session_state['positional_encoder'].eval() # putting model on evaluation mode
 
 if 'embedding' not in st.session_state.keys():
     st.session_state['embedding'] = TokenEmbedding(st.session_state['vocab'].__len__(),512)
-    st.session_state['embedding'].load_state_dict(torch.load('../models/Transformer/embedding_30_epochs.pt',map_location=torch.device('cpu')))
+    st.session_state['embedding'].load_state_dict(torch.load('models/Transformer/embedding_30_epochs.pt',map_location=torch.device('cpu')))
     st.session_state['embedding'].eval() # putting model on evaluation mode
 
 # Function for preprocessing essays

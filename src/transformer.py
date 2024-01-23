@@ -14,7 +14,7 @@ import sys
 sys.path.append("../")
 
 # Getting the vocab
-vocab = torch.load("../vocab.pt")
+vocab = torch.load("vocab.pt")
 
 # Encodings and Embeddings for Transformer
 class TokenEmbedding(nn.Module):
