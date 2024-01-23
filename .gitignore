@@ -1,12 +1,7 @@
 # Ignoring the data
-preprocessed_data.csv
-prepared_training_set.csv
 .python-version
 credentials.py
-Hugging-Face
 notebooks/catboost_info
-vectorizers, vocabularies, and scalars/
-data/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
