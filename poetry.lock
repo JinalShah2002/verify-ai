@@ -220,6 +220,20 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "en_core_web_sm"
+version = "3.7.1"
+description = "English pipeline optimized for CPU. Components: tok2vec, tagger, parser, senter, ner, attribute_ruler, lemmatizer."
+category = "dev"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+spacy = ">=3.7.2,<3.8.0"
+
+[package.source]
+type = "url"
+url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1.tar.gz"
+[[package]]
 name = "exceptiongroup"
 version = "1.2.0"
 description = "Backport of PEP 654 (exception groups)"
@@ -2000,7 +2014,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-ena
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.9,<3.9.7 || >3.9.7,<3.11"
-content-hash = "bd6503a40140f19fec6092dfc4513ab8ba124bc170a93a2da3d4fe4189cfb7b5"
+content-hash = "5473b91bc834b8b82f06aee621bfbfec1655e3e76c5e7a3ad46615cf36423e6b"
 
 [metadata.files]
 absl-py = []
@@ -2022,6 +2036,7 @@ confection = []
 contourpy = []
 cycler = []
 cymem = []
+en_core_web_sm = []
 exceptiongroup = []
 filelock = []
 flatbuffers = []

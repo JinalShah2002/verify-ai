@@ -27,6 +27,7 @@ catboost = "^1.2.2"
 tensorflow = "^2.15.0"
 
 [tool.poetry.dev-dependencies]
+en_core_web_sm = { url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1.tar.gz" }
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
