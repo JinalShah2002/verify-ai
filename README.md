@@ -1,5 +1,5 @@
 # verify-ai
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://verifyai.streamlit.app/)  
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://verifyai.streamlit.app/) 
 Using machine learning to detect A.I generated essays.
 
 ## Problem
@@ -9,6 +9,11 @@ The rise of large language models (LLMs) has caused many folks to be concerned t
 The problem is a classic binary classification problem (supervised learning) as the solution will simply classify an essay as A.I generated or authentic (student-written). To see how well my solution works, I will enter it into the [LLM - Detect AI Generated Text](https://www.kaggle.com/competitions/llm-detect-ai-generated-text) on Kaggle. This challenge evaluates solutions based on the Receiver Operator Curve (ROC) Area Under the Curve (AUC); hence, I will use the ROC AUC as my evaluation metric for my model. 
 
 The Kaggle challenge already provides me with a dataset. However, the dataset is limited to 1378 essays of which 1375 are student written. Furthermore, the challenge only provides me essays from 2 prompts. The lack of data can be addressed by gathering more data from other data sources. Luckily, there are a variety of resources that can provide me with data that I can utilize in this project. Additionally, this problem is a problem that has garnered much attention from various researchers. Hence, I can utilize current research findings in building my solution. The papers I have utilized to guide my approach are cited in the References section. 
+
+## Application
+The application is live! You can go directly to ![https://verifyai.streamlit.app/](https://verifyai.streamlit.app/) to play with the project! All you need to do is paste your essay into the text box and in a couple minutes, you will see a probability of how likely it is for the essay to be written by a LLM. The following images illustrate how to use the app:
+
+
 
 ## References
 This section outlines all the resources I used.
