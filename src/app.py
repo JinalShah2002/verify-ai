@@ -16,30 +16,15 @@ the model.
 import re
 import streamlit as st 
 import pandas as pd
-from preprocessing import Preprocessing
-import pickle
+import torch
+import torch.nn as nn
+from nltk.stem import SnowballStemmer
+from tensorflow import keras
+from keras.utils import pad_sequences
+from transformer import Model, PositionalEncoding, TokenEmbedding
 import sys
 
-# Inserting the path
 sys.path.append('../')
-
-# A function to get the word count
-def get_word_count(text:str) -> int:
-    """
-    get_word_count
-
-    A function to get the word count of some text.
-
-    inputs:
-    - text: a string that indicates you want to get the word count for.
-
-    outputs:
-    - an integer representing the word count
-    """
-    return len(re.findall(r'[a-zA-Z_]+',text))
-
-numerical = ['word_count','stop_word_count','stop_word_ratio','unique_word_count','unique_word_ratio',
-             'count_question','count_exclamation','count_semi','count_colon','grammar_errors']
 
 st.markdown("<h1 style='text-align: center; color: teal;'>Authentic.AI</h1>", unsafe_allow_html=True)
 st.markdown("<h2 style='text-align: center; color: teal;'>Using machine learning to detect A.I generated essays 🤖</h2>", unsafe_allow_html=True)
@@ -50,6 +35,49 @@ st.write('Paste your essay into the below text box and click submit. Within 3 mi
 if 'essay' not in st.session_state.keys():
     st.session_state['essay'] = ''
 
+# Creating states for tokenizer, stemmer, and vocab
+if 'tokenizer' not in st.session_state.keys():
+    st.session_state['tokenizer'] = get_tokenizer('spacy','en_core_web_sm')
+
+if 'stemmer' not in st.session_state.keys():
+    st.session_state['stemmer'] = SnowballStemmer(language='english')
+
+if 'vocab' not in st.session_state.keys():
+    st.session_state['vocab'] = torch.load('../vocab.pt')
+
+# Setting up the model
+if 'model' not in st.session_state.keys():
+    st.session_state['model'] = Model(d_model=512,nheads=8,dim_feedforward=2048,dropout=0.1,num_layers=2)
+    st.session_state['model'].load_state_dict(torch.load('../models/Transformer/transformers_30_epochs.pt',map_location=torch.device('cpu')))
+    st.session_state['model'].eval() # putting model on evaluation mode
+
+if 'positional_encoder' not in st.session_state.keys():
+    st.session_state['positional_encoder'] = PositionalEncoding(512,dropout=0.1,maxlen=500)
+    st.session_state['positional_encoder'].load_state_dict(torch.load('../models/Transformer/positional_encoding_30_epochs.pt',map_location=torch.device('cpu')))
+    st.session_state['positional_encoder'].eval() # putting model on evaluation mode
+
+if 'embedding' not in st.session_state.keys():
+    st.session_state['embedding'] = TokenEmbedding(st.session_state['vocab'].__len__(),512)
+    st.session_state['embedding'].load_state_dict(torch.load('../models/Transformer/embedding_30_epochs.pt',map_location=torch.device('cpu')))
+    st.session_state['embedding'].eval() # putting model on evaluation mode
+
+# Function for preprocessing essays
+def preprocess_essays(essay:str) -> list:
+    prepared_essay = []
+    # Preprocessing the essay a bit
+    preprocess_essay = essay.replace('\n',"")
+    preprocess_essay = essay.replace('\t',"")
+    tokenized = st.session_state['tokenizer'](preprocess_essay.replace('\n',""))
+
+    # Getting the lemmas
+    prepared_essay = [st.session_state['stemmer'].stem(token) for token in tokenized]
+
+    return prepared_essay
+
+# Function to create padding mask
+def create_padding_mask(X):
+    return (X == st.session_state['vocab']['<pad>'])
+
 # Creating a form to drop the text into 
 form = st.form(key='my_form')
 
@@ -57,28 +85,21 @@ form = st.form(key='my_form')
 st.session_state['text'] = form.text_input(label='Enter the Essay:').replace(r'\n','\n')
 submit_button = form.form_submit_button('Submit')
 
-
 # If button clicked
 if submit_button:
-    # Converting text to a dataframe
-    input_dict = {'essay':st.session_state['text'],'word_count':get_word_count(st.session_state['text'])}
-    input_df = pd.DataFrame.from_dict(input_dict,orient='index').T
     # Sending text through the preprocessing pipeline
-    preprocessor = Preprocessing(input_df)
-    preprocessed_input = preprocessor.preprocessing()
+    tokenized_essays = preprocess_essays(st.session_state['text'])
+    preprocessed_input = [st.session_state['vocab'](tokenized_essays)]
 
-    # Dropping the essay column 
-    preprocessed_input.drop(['essay'],axis=1,inplace=True)
+    # Padding the essay
+    padded_essays = pad_sequences(preprocessed_input,maxlen=500,padding='post',truncating='post',value=st.session_state['vocab']['<pad>'])
+    padded_essays_tensor = torch.from_numpy(padded_essays)
 
-    # Scaling it
-    with open('../scalars/scalar_grammar.pkl','rb') as scaler_file:
-        scaler = pickle.load(scaler_file)
-    preprocessed_input[numerical] = scaler.transform(preprocessed_input[numerical])
-    
-    # Sending into model
-    with open('../models/random_forest_base.pkl','rb') as model_file:
-        model = pickle.load(model_file)
+    # Putting example through model
+    embed_input = st.session_state['embedding'](padded_essays_tensor)
+    model_input = st.session_state['positional_encoder'](embed_input)
+    predictions = st.session_state['model'](model_input,src_key_padding_mask=create_padding_mask(padded_essays_tensor))
 
     # Making predictions
-    probabilities = model.predict_proba(preprocessed_input.values)[:,1]
-    st.write(f'There is a {round(probabilities[0] * 100,2)}% chance this essay was written by a LLM')
+    st.write(f'There is a {round(predictions.item() * 100,2)}% chance this essay was written by a LLM')
+    st.write("Note: this number is simply a prediction. It can be incorrect ,and one shouldn't use this detector as a primary means of determining essay authorship!")
