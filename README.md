@@ -1,4 +1,4 @@
-# authentic-ai
+# verify-ai
 Using machine learning to detect A.I generated essays.
 
 ## Problem
