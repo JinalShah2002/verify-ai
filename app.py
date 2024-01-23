@@ -33,6 +33,9 @@ import subprocess
 def download_en_core_web_sm():
     subprocess.run(["python", "-m", "spacy", "download", "en_core_web_sm"])
 
+# Downloading tokenizer
+download_en_core_web_sm()
+
 st.markdown("<h1 style='text-align: center; color: teal;'>Verify.AI</h1>", unsafe_allow_html=True)
 st.markdown("<h2 style='text-align: center; color: teal;'>Using machine learning to detect A.I generated essays 🤖</h2>", unsafe_allow_html=True)
 st.markdown("<h3 style='text-align: center; color: teal;'>How It Works</h3>", unsafe_allow_html=True)
