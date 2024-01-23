@@ -4,6 +4,7 @@ credentials.py
 notebooks/catboost_info
 models/Fine-Tuned Roberta
 Vectorizers,Scalars,Vocabs/
+data/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
