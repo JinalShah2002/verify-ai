@@ -1,5 +1,5 @@
 # verify-ai
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://verifyai.streamlit.app/)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://verifyai.streamlit.app/)  
 Using machine learning to detect A.I generated essays.
 
 ## Problem
