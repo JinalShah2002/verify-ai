@@ -11,7 +11,7 @@ The problem is a classic binary classification problem (supervised learning) as 
 The Kaggle challenge already provides me with a dataset. However, the dataset is limited to 1378 essays of which 1375 are student written. Furthermore, the challenge only provides me essays from 2 prompts. The lack of data can be addressed by gathering more data from other data sources. Luckily, there are a variety of resources that can provide me with data that I can utilize in this project. Additionally, this problem is a problem that has garnered much attention from various researchers. Hence, I can utilize current research findings in building my solution. The papers I have utilized to guide my approach are cited in the References section. 
 
 ## Application
-The application is live! You can go directly to ![https://verifyai.streamlit.app/](https://verifyai.streamlit.app/) to play with the project! All you need to do is paste your essay into the text box and in a couple minutes, you will see a probability of how likely it is for the essay to be written by a LLM. The following images illustrate how to use the app:
+The application is live! You can go directly to [https://verifyai.streamlit.app/](https://verifyai.streamlit.app/) to play with the project! All you need to do is paste your essay into the text box and in a couple minutes, you will see a probability of how likely it is for the essay to be written by a LLM. The following images illustrate how to use the app:
 
 ![alt-text-1](images/blank.png "title-1") ![alt-text-2](images/text.png "title-2")
 
