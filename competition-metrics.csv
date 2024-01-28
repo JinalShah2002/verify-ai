@@ -1,12 +1,12 @@
-model, Public Score, Private Score
-Grammar Counts Heuristic (count < 7),0.679,0.597
-ANN,0.717,0.639
-Random Forest,0.773,0.680
-Gradient Boosting,0.785,0.711
-ANN with Grammar Errors Noise,0.759,0.649
-Random Forest Fine-Tuned with Grammar Errors Noise,0.766,0.681
-Gradient Boosting Fine-Tuned with Grammar Errors Noise,0.802,0.6996
-Ensemble (Gradient Boosting + Random Forest Grammar Errors Noise),0.783,0.689
-Ensemble (Gradient Boosting + ANN with Grammar Errors Noise),0,0
-Ensemble (Random Forest + ANN with Grammar Errors Noise),0,0
-Ensemble (Random Forest + Catboost + ANN with Grammar Errors Noise),0,0
+model, Public Score, Private Score,Weighted Score
+Grammar Counts Heuristic (count < 7),0.679,0.597,0.63472
+ANN,0.717,0.639,0.67488
+Random Forest,0.773,0.68,0.72278
+Gradient Boosting,0.785,0.711,0.74504
+ANN with Grammar Errors Noise,0.759,0.649,0.6996
+Random Forest Fine-Tuned with Grammar Errors Noise,0.766,0.681,0.7201
+Gradient Boosting Fine-Tuned with Grammar Errors Noise,0.802,0.6996,0.746704
+Ensemble (Gradient Boosting + Random Forest Grammar Errors Noise),0.783,0.689,0.73224
+Ensemble (Gradient Boosting + ANN with Grammar Errors Noise),0,0,0
+Ensemble (Random Forest + ANN with Grammar Errors Noise),0,0,0
+Ensemble (Random Forest + Catboost + ANN with Grammar Errors Noise),0,0,0
