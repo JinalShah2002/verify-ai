@@ -1,10 +1,10 @@
 # Ignoring the data
 .python-version
 credentials.py
-notebooks/catboost_info
-models/Fine-Tuned Roberta
-vectorizers & scalars/
+archive/
 data/
+notebooks/modeling/catboost_info
+models/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
