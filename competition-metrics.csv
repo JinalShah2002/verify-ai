@@ -1,12 +1,16 @@
 model, Public Score, Private Score,Weighted Score
-Grammar Counts Heuristic (count < 7),0.679,0.597,0.63472
-ANN,0.717,0.639,0.67488
-Random Forest,0.773,0.68,0.72278
-Gradient Boosting,0.785,0.711,0.74504
-ANN with Grammar Errors Noise,0.759,0.649,0.6996
-Random Forest Fine-Tuned with Grammar Errors Noise,0.766,0.681,0.7201
 Gradient Boosting Fine-Tuned with Grammar Errors Noise,0.802,0.6996,0.746704
+Gradient Boosting,0.785,0.711,0.74504
+Gradient Boosting Fine-tuned with Grammar Errors Noise & Word Counts Noise,0.8064,0.6887,0.742842
+Ensemble (Gradient Boosting + ANN with Grammar Errors Noise),0.799,0.691,0.74068
 Ensemble (Gradient Boosting + Random Forest Grammar Errors Noise),0.783,0.689,0.73224
-Ensemble (Gradient Boosting + ANN with Grammar Errors Noise),0,0,0
-Ensemble (Random Forest + ANN with Grammar Errors Noise),0,0,0
-Ensemble (Random Forest + Catboost + ANN with Grammar Errors Noise),0,0,0
+Ensemble (Random Forest + Gradient Boosting + ANN with Grammar Errors Noise),0.786,0.686,0.732
+Ensemble (Random Forest + ANN with Grammar Errors Noise),0.776,0.681,0.7247
+Random Forest,0.773,0.68,0.72278
+Random Forest Fine-Tuned with Grammar Errors Noise,0.766,0.681,0.7201
+2 Layer BiDirectional LSTM,0.808,0.64,0.71728
+2 Layer BiDirectional LSTM with 512 Embedding Dimension and Hidden Size 128,0.783,0.659,0.71604
+ANN with Grammar Errors Noise,0.759,0.649,0.6996
+LSTM,0.756,0.617,0.68094
+ANN,0.717,0.639,0.67488
+Grammar Counts Heuristic (count < 7),0.679,0.597,0.63472
