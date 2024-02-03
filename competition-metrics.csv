@@ -1,6 +1,7 @@
 model, Public Score, Private Score,Weighted Score
 Gradient Boosting Fine-Tuned with Grammar Errors Noise,0.802,0.6996,0.746704
 Gradient Boosting,0.785,0.711,0.74504
+2 Layer Transformer Encoder,0.783,0.712,0.74466
 Gradient Boosting Fine-tuned with Grammar Errors Noise & Word Counts Noise,0.8064,0.6887,0.742842
 Ensemble (Gradient Boosting + ANN with Grammar Errors Noise),0.799,0.691,0.74068
 Ensemble (Gradient Boosting + Random Forest Grammar Errors Noise),0.783,0.689,0.73224
