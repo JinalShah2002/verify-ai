@@ -1,4 +1,6 @@
 model, Public Score, Private Score,Weighted Score
+Fine-tuned DistilBERT,0.816,0.736,0.7728
+Gradient Boosting + DistilBERT,0.81,0.721,0.76194
 Gradient Boosting Fine-Tuned with Grammar Errors Noise,0.802,0.6996,0.746704
 Gradient Boosting,0.785,0.711,0.74504
 2 Layer Transformer Encoder,0.773,0.719,0.74384
@@ -14,4 +16,5 @@ Random Forest Fine-Tuned with Grammar Errors Noise,0.766,0.681,0.7201
 ANN with Grammar Errors Noise,0.759,0.649,0.6996
 LSTM,0.756,0.617,0.68094
 ANN,0.717,0.639,0.67488
+Fine-tuned RoBERTA,0.738,0.605,0.66618
 Grammar Counts Heuristic (count < 7),0.679,0.597,0.63472
