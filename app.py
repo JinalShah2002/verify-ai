@@ -75,8 +75,11 @@ if submit_button:
     preprocessed_essay = preprocess(st.session_state['text'])
 
     # Getting the probability
-    prediction = inference(preprocessed_essay,tokenizer,model)
+    probability = inference(preprocessed_essay,tokenizer,model)
 
-    # Making predictions
-    st.write(f'There is a {round(prediction.item() * 100,2)}% chance this essay was written by a LLM')
+    # Decision Boundary (Boundary is 71% or 0.71)
+    if probability > 0.71:
+        st.markdown("<p style='text-align: center; color: red;'>LLM Written</p>", unsafe_allow_html=True)
+    else:
+        st.markdown("<p style='text-align: center; color: green;'>Not LLM Written</p>", unsafe_allow_html=True)
     st.write("Note: this number is simply a prediction. It can be incorrect ,and one shouldn't use this detector as a primary means of determining essay authorship! False Positives are possible!")
