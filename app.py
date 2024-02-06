@@ -40,8 +40,8 @@ def preprocess(essay:str):
 # Getting the tokenizer and model
 @st.cache_resource
 def get_all():
-    tokenizer = AutoTokenizer.from_pretrained("Skittles2821/distilbert-detector")
-    model = AutoModelForSequenceClassification.from_pretrained("Skittles2821/distilbert-detector")
+    tokenizer = AutoTokenizer.from_pretrained("JinalShah2002/distilbert-detector")
+    model = AutoModelForSequenceClassification.from_pretrained("JinalShah2002/distilbert-detector")
     return tokenizer, model
 
 # Defining a function for inference
