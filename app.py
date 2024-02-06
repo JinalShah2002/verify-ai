@@ -82,4 +82,4 @@ if submit_button:
         st.markdown("<p style='text-align: center; color: red;'>LLM Written</p>", unsafe_allow_html=True)
     else:
         st.markdown("<p style='text-align: center; color: green;'>Not LLM Written</p>", unsafe_allow_html=True)
-    st.write("Note: this number is simply a prediction. It can be incorrect ,and one shouldn't use this detector as a primary means of determining essay authorship! False Positives are possible!")
+    st.write("Note: this is simply a prediction. It can be incorrect ,and one shouldn't use this detector as a primary means of determining essay authorship! False Positives are possible!")
