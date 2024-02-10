@@ -66,7 +66,7 @@ tokenizer,model = get_all()
 form = st.form(key='my_form')
 
 # Need to make sure the \n are recognized as escape characters
-st.session_state['text'] = form.text_input(label='Enter the Essay:').replace(r'\n','\n').replace(r'\xa0','\xa0').replace(r'\t','\t')
+st.session_state['text'] = form.text_area(label='Enter the Essay:').replace(r'\n','\n').replace(r'\xa0','\xa0').replace(r'\t','\t')
 submit_button = form.form_submit_button('Submit')
 
 # If button clicked
